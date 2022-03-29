@@ -1,0 +1,27 @@
+name: Django QuickStart
+
+on: [push]
+
+jobs:
+  build:
+    env:
+      PIPENV_NO_INHERIT: 1
+      PIPENV_IGNORE_VIRTUALENVS: 1
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Copying configurations
+      run: |
+          cp contrib/env-sample .env
+    - name: Instalar Dependências
+      run: |
+        pip install pipenv
+        pipenv sync --dev
+    - name: Rodar Testes Automáticos
+      run: |
+        pipenv run pytest djangoquickstart
